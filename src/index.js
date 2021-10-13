@@ -4,7 +4,7 @@ import {fastify} from 'fastify';
 import fastifyStatic from 'fastify-static';
 import path from 'path';  // this is a default part of nodejs
 import  {fileURLToPath}  from 'url';
-import { Console } from "console";
+import { connectToDatabase} from './db.js';
 
 //ESM specific features in order to get access to the directory name
 const __filename = fileURLToPath(import.meta.url);
@@ -26,13 +26,12 @@ async function startApp(){
                  data:'Hello world', 
              }) // fastify sending response containing an object with data property
         })
-
-        console.log(process.env.PORT);
-
         await app.listen(process.env.PORT);
-        console.log("server listening on port 4000") // wait for the app to listen on port 3000 and when done console.log()
+        console.log("⚡ server listening on port 4000") // wait for the app to listen on port 3000 and when done console.log()
     } catch (error) {
         console.error('error',error)
     }
 }
-startApp();
+connectToDatabase().then(()=>{
+    startApp();
+})
