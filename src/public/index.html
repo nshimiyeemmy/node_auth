@@ -7,6 +7,43 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>This is a welcome index page</h1>
+    <h3>Register Here</h3>
+    <form action="" id="register_form">
+        <input type="email" name="email">
+        <br>
+        <br>
+        <input type="password" name="password">
+        <br>
+        <br>
+        <button type="submit">Register Here</button>
+    </form>
+     <script>
+       /* here we want to be able to control the above html form with javascript and we want to be able to send the 
+         request along as a javascript request(the post request to the server), and we want the server to be able to accept that request
+         So by the end we want to see this form sending message to hte server
+       */
+       
+       //Below we are creating an efi function, this is a self invoking function, it executes these javascript codes the moment it's(page) loaded
+       ;(()=>{
+       const form = document.getElementById("register_form");
+        form.addEventListener("submit",(e) =>{
+          e.preventDefault() //prevent form from refreshing the page after submiting it
+          //grabbing all of the fields from the form
+          /*
+          reduce method below is going to take array of our form values and it's going to loop(iterate) over them
+          and it's going to accumulate(store) them somewhere( in an object) and it's going to give us access to each of these fields
+          */
+          const values = Object.values(form).reduce((obj,field)=>{
+            if(field.name){
+              obj[field.name] = field.value
+            }
+           return obj;
+          },{})
+          console.log("values",values)
+        })      
+       })()
+       // Now from above we have our data values being put in an object, now we are ready to send this information to the server and then we will be able to register this user and keep them in the database
+     </script>
+
 </body>
 </html>
