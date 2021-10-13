@@ -14,7 +14,6 @@ import.meta is basically a new thing in ESM, it basically allowing us to get met
 const app = fastify();
 async function startApp(){
     try {
-
         //accessing static files with fastify server
         app.register(fastifyStatic,{
             root: path.join(__dirname,"public"),
@@ -27,7 +26,7 @@ async function startApp(){
         })
 
         await app.listen(3000);
-        console.log("server listening on port 3000")
+        console.log("server listening on port 3000") // wait for the app to listen on port 3000 and when done console.log()
     } catch (error) {
         console.error('error',error)
     }
