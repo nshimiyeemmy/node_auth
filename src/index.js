@@ -26,6 +26,11 @@ async function startApp(){
                  data:'Hello world', 
              }) // fastify sending response containing an object with data property
         })
+
+        //post request 
+        app.post("/api/register",{},(request,response)=>{
+            console.log("Request",request.body);
+        })
         await app.listen(process.env.PORT);
         console.log("⚡ server listening on port 4000") // wait for the app to listen on port 3000 and when done console.log()
     } catch (error) {
