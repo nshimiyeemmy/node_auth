@@ -17,6 +17,21 @@
         <br>
         <button type="submit">Register Here</button>
     </form>
+
+    <br />
+    <hr />
+    <br />
+
+    <h3>Login Here</h3>
+    <form action="" id="login_form">
+        <input type="email" name="email">
+        <br>
+        <br>
+        <input type="password" name="password">
+        <br>
+        <br>
+        <button type="submit">Login Here</button>
+    </form>
      <script>
        /* here we want to be able to control the above html form with javascript and we want to be able to send the 
          request along as a javascript request(the post request to the server), and we want the server to be able to accept that request
@@ -25,8 +40,8 @@
        
        //Below we are creating an efi function, this is a self invoking function, it executes these javascript codes the moment it's(page) loaded
        ;(()=>{
-       const form = document.getElementById("register_form");
-        form.addEventListener("submit",async(e) =>{
+       const registerForm = document.getElementById("register_form");
+        registerForm.addEventListener("submit",async(e) =>{
           e.preventDefault() //prevent form from refreshing the page after submiting it
           //grabbing all of the fields from the form
           /*
@@ -34,13 +49,38 @@
           and it's going to accumulate(store) them somewhere( in an object) and it's going to give us access to each of these fields
           */
          try {
-          const values = Object.values(form).reduce((obj,field)=>{
+          const values = Object.values(registerForm).reduce((obj,field)=>{
             if(field.name){
               obj[field.name] = field.value
             }
            return obj;
           },{})
           const res =  await fetch("/api/register",{
+            method:"POST",
+            body:JSON.stringify(values),
+            headers:{"Content-Type":"application/json;charset=UTF-8"}
+          })
+        }catch(error){
+        console.error("error:",error) 
+      }
+          console.log("values",values)
+        })    
+
+//find form elements
+        const loginForm = document.getElementById("login_form");
+        //wait for event
+        loginForm.addEventListener("submit",async(e) =>{
+          e.preventDefault() 
+         try {
+           //get form values
+          const values = Object.values(loginForm).reduce((obj,field)=>{
+            if(field.name){
+              obj[field.name] = field.value
+            }
+           return obj;
+          },{})
+          //submit form
+          const res =  await fetch("/api/login",{
             method:"POST",
             body:JSON.stringify(values),
             headers:{"Content-Type":"application/json;charset=UTF-8"}

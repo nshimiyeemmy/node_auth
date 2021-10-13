@@ -6,6 +6,9 @@ import path from 'path';  // this is a default part of nodejs
 import  {fileURLToPath}  from 'url';
 import { connectToDatabase} from './db.js';
 import { registerUser } from "./accounts/register.js";
+import { loginUser } from "./accounts/login.js";
+
+
 
 //ESM specific features in order to get access to the directory name
 const __filename = fileURLToPath(import.meta.url);
@@ -28,11 +31,21 @@ async function startApp(){
              }) // fastify sending response containing an object with data property
         })
 
-        //post request 
+        //post request for registering the user
         app.post("/api/register",{}, async(request,response)=>{
             try {
               const userId =  await registerUser(request.body.email,request.body.password);
                console.log("userId:",userId); 
+            } catch (error) {
+               console.error(error) 
+            }
+        })
+        // post request for signing in users
+        //authentication is just to confirm that the users are who they say they are
+        app.post("/api/login",{}, async(request,response)=>{
+            try {
+                console.log(request.body.email,request.body.password); 
+              const userId =  await loginUser(request.body.email,request.body.password);
             } catch (error) {
                console.error(error) 
             }
