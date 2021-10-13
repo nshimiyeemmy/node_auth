@@ -14,6 +14,8 @@ import.meta is basically a new thing in ESM, it basically allowing us to get met
 const app = fastify();
 async function startApp(){
     try {
+
+        //accessing static files with fastify server
         app.register(fastifyStatic,{
             root: path.join(__dirname,"public"),
         })
